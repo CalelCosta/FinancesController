@@ -1,4 +1,4 @@
-package com.udemyp.myfinances.modelEnums;
+package com.udemyp.myfinances.model;
 
 public enum StatusLancamento {
 
