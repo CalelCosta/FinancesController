@@ -1,4 +1,4 @@
-package com.udemyp.myfinances.model;
+package com.udemyp.myfinances.modelEnums;
 
 public enum TipoLancamento {
 
