@@ -2,6 +2,7 @@ package com.udemyp.myfinances.model;
 
 import com.udemyp.myfinances.modelEnums.StatusLancamento;
 import com.udemyp.myfinances.modelEnums.TipoLancamento;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,6 +17,7 @@ import java.time.LocalDate;
 @Data
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class Lancamento {
 
     @Id

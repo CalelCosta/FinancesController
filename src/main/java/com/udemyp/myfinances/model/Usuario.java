@@ -7,8 +7,9 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "usuario", schema = "financas")
-@NoArgsConstructor
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Builder
 public class Usuario {
 
@@ -25,5 +26,4 @@ public class Usuario {
 
     @Column(name = "senha")
     private String senha;
-
 }
