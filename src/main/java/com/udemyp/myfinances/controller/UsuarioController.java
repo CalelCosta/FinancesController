@@ -1,5 +1,6 @@
 package com.udemyp.myfinances.controller;
 
+import com.udemyp.myfinances.Exception.ErroAutenticacao;
 import com.udemyp.myfinances.Exception.RegraNegocioException;
 import com.udemyp.myfinances.dto.UsuarioDTO;
 import com.udemyp.myfinances.model.Usuario;
@@ -16,6 +17,16 @@ public class UsuarioController {
 
     public UsuarioController(UsuarioService usuarioService) {
         this.usuarioService = usuarioService;
+    }
+
+    @PostMapping("/autenticar")
+    public ResponseEntity autenticarUsuario(@RequestBody UsuarioDTO dto){
+        try {
+            Usuario usuarioAuth = usuarioService.autenticar(dto.getEmail(), dto.getSenha());
+            return new ResponseEntity(usuarioAuth, HttpStatus.OK);
+        }catch (ErroAutenticacao err){
+            return ResponseEntity.badRequest().body(err.getMessage());
+        }
     }
 
     @PostMapping
