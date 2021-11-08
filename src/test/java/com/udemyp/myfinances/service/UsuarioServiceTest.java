@@ -7,7 +7,6 @@ import com.udemyp.myfinances.model.Usuario;
 import com.udemyp.myfinances.repository.UsuarioRepository;
 import com.udemyp.myfinances.service.impl.UsuarioServiceImpl;
 import org.assertj.core.api.Assertions;
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
