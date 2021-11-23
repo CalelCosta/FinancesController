@@ -5,6 +5,7 @@ import com.udemyp.myfinances.modelEnums.StatusLancamento;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public interface LancamentoService {
@@ -19,4 +20,6 @@ public interface LancamentoService {
     void atualizarStatus(Lancamento lancamento, StatusLancamento status);
 
     void validar(Lancamento lancamento);
+
+    Optional<Lancamento> obterPorId(Long id);
 }
