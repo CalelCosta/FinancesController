@@ -1,6 +1,7 @@
 package com.udemyp.myfinances.controller;
 
 import com.udemyp.myfinances.Exception.RegraNegocioException;
+import com.udemyp.myfinances.dto.AtualizaStatusDTO;
 import com.udemyp.myfinances.dto.LancamentoDTO;
 import com.udemyp.myfinances.model.Lancamento;
 import com.udemyp.myfinances.model.Usuario;
@@ -37,7 +38,7 @@ public class lancamentoController {
         lancamentoFiltro.setAno(ano);
 
         Optional<Usuario> u = usuarioService.obterPorId(usuario);
-        if (u.isPresent()){
+        if (!u.isPresent()){
             return ResponseEntity.badRequest()
                     .body("Não foi possível realizar a consulta. Usuário não encontrado para o ID informado");
         }else{
@@ -72,6 +73,25 @@ public class lancamentoController {
 
         }).orElseGet(() ->ResponseEntity.badRequest()
                     .body("Lançamento não encontrado na base de dados!"));
+    }
+
+    @PutMapping("{id/atualiza-status}")
+    public ResponseEntity atualizarStatus(@PathVariable Long id, @RequestBody AtualizaStatusDTO dto){
+        return lancamentoService.obterPorId(id).map(entity -> {
+                StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());
+                if (statusSelecionado == null){
+                    return ResponseEntity.badRequest()
+                            .body("Não foi possível atualizar o status do lançamento. Envie um status válido.");
+                }
+                try {
+                    entity.setStatus(statusSelecionado);
+                    lancamentoService.atualizar(entity);
+                    return new ResponseEntity(entity, HttpStatus.OK);
+                }catch (RegraNegocioException e){
+                    return ResponseEntity.badRequest().body(e.getMessage());
+                }
+        }).orElseGet(() ->ResponseEntity.badRequest()
+                .body("Lançamento não encontrado na base de dados!"));
     }
 
     @DeleteMapping("{id}")

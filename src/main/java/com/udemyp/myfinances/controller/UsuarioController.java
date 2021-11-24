@@ -17,6 +17,11 @@ public class UsuarioController {
 
     private final UsuarioService usuarioService;
 
+    @GetMapping("{id}/saldo")
+    public ResponseEntity obterSaldo(@PathVariable Long id){
+
+    }
+
     @PostMapping("/autenticar")
     public ResponseEntity autenticarUsuario(@RequestBody UsuarioDTO dto){
         try {
