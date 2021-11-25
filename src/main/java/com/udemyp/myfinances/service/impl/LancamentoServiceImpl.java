@@ -3,6 +3,7 @@ package com.udemyp.myfinances.service.impl;
 import com.udemyp.myfinances.Exception.RegraNegocioException;
 import com.udemyp.myfinances.model.Lancamento;
 import com.udemyp.myfinances.modelEnums.StatusLancamento;
+import com.udemyp.myfinances.modelEnums.TipoLancamento;
 import com.udemyp.myfinances.repository.LancamentoRepository;
 import com.udemyp.myfinances.service.LancamentoService;
 import org.springframework.data.domain.Example;
@@ -93,5 +94,20 @@ public class LancamentoServiceImpl implements LancamentoService {
     @Override
     public Optional<Lancamento> obterPorId(Long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public BigDecimal obterSaldoPorUsuario(Long id) {
+        BigDecimal receitas = repository.obterSaldoPorTipoLancamentoUsuario(id, TipoLancamento.RECEITA); //Método .name() pega a constante(RECEITA) e transforma em String.
+        BigDecimal despesas = repository.obterSaldoPorTipoLancamentoUsuario(id, TipoLancamento.DESPESA);
+
+        if (receitas == null){
+            receitas = BigDecimal.ZERO;
+        }
+        if (despesas == null){
+            despesas = BigDecimal.ZERO;
+        }
+        return receitas.subtract(despesas);
     }
 }

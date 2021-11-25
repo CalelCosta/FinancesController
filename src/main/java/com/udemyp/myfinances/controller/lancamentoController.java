@@ -75,7 +75,7 @@ public class lancamentoController {
                     .body("Lançamento não encontrado na base de dados!"));
     }
 
-    @PutMapping("{id/atualiza-status}")
+    @PutMapping("{id}/atualiza-status")
     public ResponseEntity atualizarStatus(@PathVariable Long id, @RequestBody AtualizaStatusDTO dto){
         return lancamentoService.obterPorId(id).map(entity -> {
                 StatusLancamento statusSelecionado = StatusLancamento.valueOf(dto.getStatus());

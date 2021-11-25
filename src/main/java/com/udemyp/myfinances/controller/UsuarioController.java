@@ -4,11 +4,15 @@ import com.udemyp.myfinances.Exception.ErroAutenticacao;
 import com.udemyp.myfinances.Exception.RegraNegocioException;
 import com.udemyp.myfinances.dto.UsuarioDTO;
 import com.udemyp.myfinances.model.Usuario;
+import com.udemyp.myfinances.service.LancamentoService;
 import com.udemyp.myfinances.service.UsuarioService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.math.BigDecimal;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/usuarios")
@@ -16,10 +20,18 @@ import org.springframework.web.bind.annotation.*;
 public class UsuarioController {
 
     private final UsuarioService usuarioService;
+    private final LancamentoService lancamentoService;
+
 
     @GetMapping("{id}/saldo")
     public ResponseEntity obterSaldo(@PathVariable Long id){
+        Optional<Usuario> usuario = usuarioService.obterPorId(id);
+        if (!usuario.isPresent()){
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
 
+        BigDecimal saldo = lancamentoService.obterSaldoPorUsuario(id);
+        return new ResponseEntity(saldo, HttpStatus.OK);
     }
 
     @PostMapping("/autenticar")
