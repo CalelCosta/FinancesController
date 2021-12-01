@@ -222,5 +222,4 @@ public class LancamentoServiceTest {
         erro = Assertions.catchThrowable(() ->lancamentoService.validar(lancamento));
         Assertions.assertThat(erro).isInstanceOf(RegraNegocioException.class).hasMessage("Informe um Tipo de Lançamento.");
     }
-
 }
