@@ -1,2 +1,2 @@
 # FinancesController
-A tool to control your finances
+An API to control your finances
